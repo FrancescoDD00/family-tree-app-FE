@@ -1,0 +1,24 @@
+<div class="tree-container">
+
+  <!-- SELECT PERSON -->
+  <div class="selector">
+    <label>Chi sei?</label>
+
+    <select [(ngModel)]="selectedPersonId" (ngModelChange)="selectPersonById($event)">
+      <option [ngValue]="null">-- Seleziona --</option>
+
+      @for (p of persons; track p.id) {
+        <option [ngValue]="p.id">
+          {{ getFullname(p) }}
+        </option>
+      }
+    </select>
+  </div>
+
+  <!-- TREE -->
+   @if (selectedPerson) {
+      <app-tree-node-component [person]="selectedPerson"></app-tree-node-component>
+   }
+
+
+</div>

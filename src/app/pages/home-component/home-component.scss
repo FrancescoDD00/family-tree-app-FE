@@ -1,0 +1,139 @@
+.homepage-container {
+  position: relative; // serve per l'overlay
+  font-family: Arial, sans-serif;
+  color: #091413; // testo principale
+  background-image: url("../../../assets/images/Albero_genealogico_BG.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  padding-top: 6rem; // spazio per header fisso
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-bottom: 2rem;
+  overflow: hidden;
+
+  // Velo semitrasparente sopra l'immagine
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0; // top:0; left:0; right:0; bottom:0;
+    background-color: rgba(255, 255, 255, 0.3); // bianco semitrasparente
+    z-index: 1;
+  }
+
+  // Tutto il contenuto sopra l'overlay
+  .hero,
+  .features {
+    position: relative;
+    z-index: 2;
+  }
+
+ .hero {
+  position: relative;
+  text-align: center;
+  margin-bottom: 4rem;
+  padding: 4rem 2rem;
+  border-radius: 12px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 2;
+
+  // Overlay dietro il testo
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(9, 20, 19, 0.5); // verde molto scuro semitrasparente
+    border-radius: 12px;
+    z-index: -1; // sotto il testo
+  }
+
+  h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #B0E4CC; // verde chiaro della palette
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 1.3rem;
+    line-height: 1.8;
+    color: #ffffff; // testo bianco per leggibilità
+    max-width: 700px;
+    margin: 0 auto 2rem auto;
+  }
+
+  .cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+
+    a {
+      text-decoration: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+
+      &.btn-primary {
+        background-color: #408A71; // verde medio
+        color: #fff;
+
+        &:hover {
+          background-color: #285A48; // verde scuro
+        }
+      }
+
+      &.btn-secondary {
+        background-color: #B0E4CC; // verde chiaro
+        color: #091413;
+
+        &:hover {
+          background-color: #408A71;
+          color: #fff;
+        }
+      }
+    }
+  }
+}
+
+  .features {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .feature {
+      flex: 1 1 250px;
+      background-color: #B0E4CC;
+      border-radius: 10px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
+
+      &:hover {
+        transform: translateY(-5px);
+      }
+
+      h2 {
+        color: #285A48;
+        margin-bottom: 1rem;
+      }
+
+      p {
+        color: #091413;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .features {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+}

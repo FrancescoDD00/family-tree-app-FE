@@ -1,0 +1,32 @@
+.node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.card {
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: #4caf50;
+  color: white;
+  cursor: pointer;
+}
+
+.children {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.children-row {
+  display: flex;
+  gap: 20px;
+  margin-top: 15px;
+}
+
+.child-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

@@ -1,0 +1,57 @@
+.tree-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.selector {
+  margin-bottom: 20px;
+}
+
+.tree {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.level {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.card {
+  padding: 10px 15px;
+  border-radius: 10px;
+  background: #f2f2f2;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  background: #e6e6e6;
+}
+
+.me-card {
+  background: #4caf50;
+  color: white;
+  font-weight: bold;
+}
+
+.parent {
+  background: #2196f3;
+  color: white;
+}
+
+.child {
+  background: #ff9800;
+  color: white;
+}
+
+.sibling {
+  background: #9c27b0;
+  color: white;
+}

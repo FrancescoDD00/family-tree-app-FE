@@ -1,0 +1,29 @@
+<div class="node">
+
+  <!-- PERSONA -->
+  <div class="card root">
+    {{ getFullname(person) }}
+  </div>
+
+  <!-- FIGLI -->
+  <div class="children" *ngIf="children.length > 0">
+
+    <div class="line"></div>
+
+    <div class="children-row">
+      @for (child of children; track child.id) {
+        <div class="child-wrapper">
+
+          <div class="card child" (click)="select(child)">
+            {{ getFullname(child) }}
+          </div>
+
+          <!-- 🔥 RICORSIONE -->
+          <app-tree-node-component [person]="child"></app-tree-node-component>
+
+        </div>
+      }
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,79 @@
+.app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%; 
+  height: 2rem;
+  background-color: #285A48;
+  color: #B0E4CC;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  z-index: 1000;
+
+  display: flex;
+  justify-content: center; 
+  padding: 0.5rem 0;
+
+  .header-container {
+    width: 100%;
+    max-width: 1400px; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem; // padding interno ai lati
+  }
+
+  .logo h1 {
+    margin: 0;
+    left: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    
+    a {
+  text-decoration: none; // disattiva underline
+  color: inherit;         // eredita il colore dall'h1 o dal logo
+}
+  }
+
+  nav {
+    display: flex;
+    gap: 1.5rem;
+
+    a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      transition: all 0.2s;
+
+      &:hover {
+        background-color: rgba(255,255,255,0.2);
+      }
+
+      &.active {
+        background-color: rgba(255,255,255,0.3);
+        font-weight: 700;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .header-container {
+      flex-direction: column;
+      align-items: flex-start;
+
+      nav {
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+
+        a {
+          display: block;
+          width: 100%;
+          text-align: left;
+        }
+      }
+    }
+  }
+}
