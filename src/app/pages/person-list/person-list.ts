@@ -100,11 +100,11 @@ export class PersonListComponent implements OnInit {
   }
 
   formatName(nameOrSurname: string): string {
-    if (!nameOrSurname) return '';
     return nameOrSurname
-      .split(' ')
-      .map(word => word.at(0)?.toLocaleUpperCase() + word.substring(1).toLocaleLowerCase())
-      .join(' ');
+      ?.trim()
+      .split(/\s+/)
+      .map(word => word[0].toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ') ?? '';
   }
 
 
