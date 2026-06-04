@@ -1,29 +1,36 @@
-<div class="node">
+<div class="node-wrapper">
 
-  <!-- PERSONA -->
-  <div class="card root">
-    {{ getFullname(person) }}
+  <div class="parents-row">
+    @if (node?.father) {
+    <div class="parent-branch clickable" (click)="select(node.father!.id)">
+      <small>👴 Padre</small>
+      <div class="mini-box">{{ node.father!.name }}</div>
+    </div>
+    }
+    @if (node?.mother) {
+    <div class="parent-branch clickable" (click)="select(node.mother!.id)">
+      <small>👵 Madre</small>
+      <div class="mini-box">{{ node.mother!.name }}</div>
+    </div>
+    }
   </div>
 
-  <!-- FIGLI -->
-  <div class="children" *ngIf="children.length > 0">
+  <div class="current-person-box main-focus">
+    <span class="focus-badge">Soggetto Attivo</span>
+    <strong>{{ node?.name }} {{ node?.surname }}</strong>
+  </div>
 
-    <div class="line"></div>
-
-    <div class="children-row">
-      @for (child of children; track child.id) {
-        <div class="child-wrapper">
-
-          <div class="card child" (click)="select(child)">
-            {{ getFullname(child) }}
-          </div>
-
-          <!-- 🔥 RICORSIONE -->
-          <app-tree-node-component [person]="child"></app-tree-node-component>
-
-        </div>
+  @if (node?.children && node.children!.length > 0) {
+  <div class="children-row">
+    <small class="children-label">👶 Figli:</small>
+    <div class="children-chips-container">
+      @for (child of node.children; track child.id) {
+      <div class="child-chip clickable" (click)="select(child.id)">
+        {{ child.name }}
+      </div>
       }
     </div>
-
   </div>
+  }
+
 </div>

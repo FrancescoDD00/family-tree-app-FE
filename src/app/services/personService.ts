@@ -24,7 +24,7 @@ export class PersonService {
     return this.http.get<Person[]>(`${this.apiUrl}/${id}/parents`);
   }
 
-  getChildren(id: number): Observable<Person[]> {
+  getChildrens(id: number): Observable<Person[]> {
     return this.http.get<Person[]>(`${this.apiUrl}/${id}/children`);
   }
 
@@ -42,5 +42,9 @@ export class PersonService {
 
   deletePersonById(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  getPersonTree(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${id}/tree`);
   }
 }

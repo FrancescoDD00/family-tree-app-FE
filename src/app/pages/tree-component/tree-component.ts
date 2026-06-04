@@ -1,65 +1,83 @@
 import { Component, OnInit } from '@angular/core';
 import { Person } from '../../models/person';
+import { PersonTreeNode } from '../../models/personTreeNode';
 import { PersonService } from '../../services/personService';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { forkJoin } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { TreeNodeComponent } from '../../components/tree-node-component/tree-node-component';
 
 @Component({
   selector: 'app-tree-component',
+  standalone: true,
   imports: [CommonModule, FormsModule, TreeNodeComponent],
   templateUrl: './tree-component.html',
   styleUrl: './tree-component.scss',
 })
 export class TreeComponent implements OnInit {
 
-  getFullname(person: Person) {
-    return person.name + " " + person.surname
-  }
-  constructor(private personService: PersonService) { }
+  persons$!: Observable<Person[]>;
+  private selectedPersonIdSubject = new BehaviorSubject<number | null>(null);
 
+  selectedPerson$!: Observable<Person | undefined>;
+  selectedTree$!: Observable<PersonTreeNode | null | undefined>;
+
+  // Variabile per il databinding della select
   selectedPersonId: number | null = null;
 
-  selectedPerson?: Person;
-  father?: Person;
-  mother?: Person;
-  children: Person[] = [];
-  siblings: Person[] = [];
-
-  persons: Person[] = [];
-
+  constructor(private personService: PersonService) { }
 
   ngOnInit() {
-    this.personService.getPersons().subscribe(data => {
-      console.log("PERSONS:", data);
-      this.persons = data;
-    });
+    // 1. Scarica la lista piatta dal BE una sola volta
+    this.persons$ = this.personService.getPersons();
+
+    // 2. Ricava la persona selezionata
+    this.selectedPerson$ = combineLatest([this.persons$, this.selectedPersonIdSubject]).pipe(
+      map(([persons, id]) => persons.find(p => p.id === id))
+    );
+
+    // 3. Genera l'albero genealogico REATTIVO direttamente in memoria client-side
+    this.selectedTree$ = combineLatest([this.persons$, this.selectedPersonIdSubject]).pipe(
+      map(([persons, id]) => {
+        if (!id) return null;
+        const visited = new Set<number>();
+        return this.buildTreeInFrontend(id, persons, visited);
+      })
+    );
   }
 
-  loadPersons() {
-    this.personService.getPersons().subscribe(data => this.persons = data);
+  selectPersonById(id: number | null) {
+    console.log("Selected person ID:", id);
+    this.selectedPersonIdSubject.next(id);
   }
 
-  loadNode(id: number) {
-    forkJoin({
-      person: this.personService.getPerson(id),
-      parents: this.personService.getParents(id),
-      children: this.personService.getChildren(id),
-      siblings: this.personService.getSiblings(id)
-    }).subscribe(({ person, parents, children, siblings }) => {
+  // La logica ricorsiva ora gira sul browser dell'utente: zero impatto sul DB!
+  private buildTreeInFrontend(id: number, persons: Person[], visited: Set<number>): PersonTreeNode | undefined {
+    if (visited.has(id)) return undefined; // Evita cicli infiniti
+    visited.add(id);
 
-      this.selectedPerson = person;
+    const person = persons.find(p => p.id === id);
+    if (!person) return undefined;
+    if (person.id == null) return undefined;
+    if (person.fatherId === person.id || person.motherId === person.id) return undefined; // Evita auto-relazioni
 
-      this.father = parents.find(p => p.gender === 'MALE');
-      this.mother = parents.find(p => p.gender === 'FEMALE');
 
-      this.children = children;
-      this.siblings = siblings;
-    });
+    const node: PersonTreeNode = {
+      id: person.id,
+      name: person.name,
+      surname: person.surname,
+      father: person.fatherId ? this.buildTreeInFrontend(person.fatherId, persons, visited) : undefined,
+      mother: person.motherId ? this.buildTreeInFrontend(person.motherId, persons, visited) : undefined,
+      children: persons
+        .filter(p => (p.fatherId === id || p.motherId === id) && p.id != null)
+        .map(p => ({ id: p.id as number, name: p.name, surname: p.surname })) // Mappa i figli come DTO leggeri
+    };
+
+    return node;
   }
 
-  selectPersonById(id: number) {
-    this.loadNode(id);
+  getFullname(person: Person): string {
+    return `${person.name} ${person.surname}`;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { Person } from '../../models/person';
 import { PersonService } from '../../services/personService';
 import { CommonModule } from '@angular/common';
@@ -17,10 +17,15 @@ import { BehaviorSubject, map, Observable, switchMap } from 'rxjs';
 export class PersonListComponent implements OnInit {
   private refresh$ = new BehaviorSubject<void>(undefined);
 
+  count = signal(0);
+
+
+
+
+
   persons$!: Observable<Person[]>;
   malePersons$!: Observable<Person[]>;
   femalePersons$!: Observable<Person[]>;
-
   showEditModal: boolean = false;
   showDeleteModal: boolean = false;
   personToEdit!: Person;
@@ -54,20 +59,29 @@ export class PersonListComponent implements OnInit {
     this.loadPersons();
   }
 
+
+
+
+  testSignal() {
+    this.count.set(this.count() + 1);
+  }
+
   loadPersons() {
-  this.persons$ = this.refresh$.pipe(
-    switchMap(() => this.personService.getPersons())
-  );
+    this.persons$ = this.refresh$.pipe(
+      switchMap(() => this.personService.getPersons())
+    );
 
-  this.malePersons$ = this.persons$.pipe(
-    map(persons => persons.filter(p => p.gender === 'MALE' && p.id !== this.personToEdit?.id))
-  );
 
-  this.femalePersons$ = this.persons$.pipe(
-    map(persons => persons.filter(p => p.gender === 'FEMALE' && p.id !== this.personToEdit?.id))
-  );
 
-}
+    this.malePersons$ = this.persons$.pipe(
+      map(persons => persons.filter(p => p.gender === 'MALE' && p.id !== this.personToEdit?.id))
+    );
+
+    this.femalePersons$ = this.persons$.pipe(
+      map(persons => persons.filter(p => p.gender === 'FEMALE' && p.id !== this.personToEdit?.id))
+    );
+
+  }
 
   toggleShowDeleteModal(person: Person) {
     this.personToEliminate = person;
@@ -77,7 +91,7 @@ export class PersonListComponent implements OnInit {
   deletePersonById(id: number) {
     this.personService.deletePersonById(id).subscribe({
       next: () => {
-        this.refresh$.next();   // 🔥 ricarica lista
+        this.refresh$.next();
         this.showDeleteModal = false;
         this.personToEliminate = undefined!;
       },

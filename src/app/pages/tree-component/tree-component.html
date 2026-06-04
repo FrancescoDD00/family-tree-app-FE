@@ -1,24 +1,33 @@
 <div class="tree-container">
 
-  <!-- SELECT PERSON -->
   <div class="selector">
     <label>Chi sei?</label>
 
+    @if (persons$ | async; as persons) {
     <select [(ngModel)]="selectedPersonId" (ngModelChange)="selectPersonById($event)">
-      <option [ngValue]="null">-- Seleziona --</option>
-
+      <option [ngValue]="null">Seleziona una persona</option>
       @for (p of persons; track p.id) {
-        <option [ngValue]="p.id">
-          {{ getFullname(p) }}
-        </option>
+      <option [ngValue]="p.id">
+        {{ getFullname(p) }}
+      </option>
       }
     </select>
+    }
   </div>
 
-  <!-- TREE -->
-   @if (selectedPerson) {
-      <app-tree-node-component [person]="selectedPerson"></app-tree-node-component>
-   }
+  <div>
+    @if (selectedPerson$ | async; as selectedPerson) {
+    <h2>
+      Ciao! {{ selectedPerson.name }} {{ selectedPerson.surname }}
+    </h2>
 
+
+    @if (selectedTree$ | async; as selectedTree) {
+    <app-tree-node-component [node]="selectedTree" (personSelected)="selectPersonById($event)">
+    </app-tree-node-component>
+    }
+    }
+
+  </div>
 
 </div>
