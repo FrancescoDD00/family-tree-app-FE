@@ -1,0 +1,49 @@
+{
+    "HEADER": {
+        "TITLE": "Family Tree",
+        "PERSONS": "Persons",
+        "ABOUT": "About",
+        "TREE": "Tree"
+    },
+    "HOME": {
+        "TITLE": "Welcome to Family Tree App",
+        "DESCRIPTION": "This site allows you to add people and build your genealogical tree. You can add new members, modify existing information, and view family relationships clearly and intuitively.",
+        "CTA": {
+            "START": "Start adding people",
+            "ABOUT": "Learn more"
+        },
+        "FEATURES": {
+            "TITLE1": "Add People",
+            "TEXT1": "Enter the name, surname, birth date, and gender of family members.",
+            "TITLE2": "Genealogical Tree",
+            "TEXT2": "Easily visualize relationships between parents and children and build your tree.",
+            "TITLE3": "Edit and Update",
+            "TEXT3": "You can update member information at any time in a simple way."
+        }
+    },
+    "ABOUT": {
+        "TITLE": "About",
+        "DESCRIPTION": "Discover the story behind the Family Tree App project.",
+        "WHO_AM_I": {
+            "TITLE": "Who I Am",
+            "P1": "Hi! My name is <strong>Francesco Di Domenico</strong>. I am the developer of this web application, created with passion to help people discover and visualize their family connections.",
+            "P2": "With a strong dedication to technology and design, I developed this tool to make exploring the genealogical history of every family accessible and fascinating."
+        },
+        "WHAT_IT_DOES": {
+            "TITLE": "What This Site Does",
+            "INTRO": "This application is an <strong>interactive family tree generator</strong>. It allows you to:",
+            "ITEMS": {
+                "ITEM1": "Manage and organize your family members' data",
+                "ITEM2": "Visualize family relationships in a dynamic and intuitive way",
+                "ITEM3": "Explore ancestors and descendants with a simple click",
+                "ITEM4": "View your family tree with modern and eye-catching graphics",
+                "ITEM5": "Discover hidden connections between your family members"
+            }
+        },
+        "MISSION": {
+            "TITLE": "My Mission",
+            "TEXT": "I want to make genealogy accessible and engaging for everyone. My goal is to provide a powerful yet easy-to-use tool that allows you to preserve and share your family history for future generations."
+        },
+        "CREDITS": "Developed with ❤️ by <strong>Francesco Di Domenico</strong>"
+    }
+}

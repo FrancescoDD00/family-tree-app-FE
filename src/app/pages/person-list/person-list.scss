@@ -4,7 +4,7 @@
   margin: 0 auto;
 }
 
-h2{
+h2 {
   display: flex;
   justify-content: center;
 }
@@ -15,7 +15,7 @@ form {
   background-color: #B0E4CC;
   padding: 2rem;
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 2rem;
 
   display: flex;
@@ -37,7 +37,7 @@ form {
 
     &:focus {
       border-color: #285A48;
-      box-shadow: 0 0 0 2px rgba(64,138,113,0.2);
+      box-shadow: 0 0 0 2px rgba(64, 138, 113, 0.2);
     }
   }
 
@@ -76,7 +76,7 @@ table {
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 
   thead {
     background-color: #285A48;
@@ -141,7 +141,7 @@ table {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
 
   display: flex;
   justify-content: center;
@@ -208,6 +208,46 @@ table {
   }
 }
 
+.search-container {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  margin: 1.5rem auto; // Il valore 'auto' centra orizzontalmente il contenitore
+
+  .search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #408A71;
+    font-size: 1.2rem;
+    pointer-events: none;
+  }
+
+  input {
+    width: 100%;
+    padding: 0.8rem 1rem 0.8rem 3rem;
+    border: 2px solid #B0E4CC;
+    border-radius: 30px;
+    font-size: 1rem;
+    color: #285A48;
+    background-color: #fff;
+    transition: all 0.3s ease;
+    outline: none;
+    box-sizing: border-box; // Importante per non sballare la larghezza col padding
+
+    &::placeholder {
+      color: #99c2b3;
+    }
+
+    &:focus {
+      border-color: #285A48;
+      box-shadow: 0 4px 12px rgba(40, 90, 72, 0.15);
+      padding-left: 3.2rem;
+    }
+  }
+}
+
 /* -------- RESPONSIVE -------- */
 @media (max-width: 768px) {
   form {
@@ -217,7 +257,8 @@ table {
   table {
     font-size: 0.85rem;
 
-    th, td {
+    th,
+    td {
       padding: 0.6rem;
     }
   }

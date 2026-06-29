@@ -1,13 +1,23 @@
 <header class="app-header">
   <div class="header-container">
     <div class="logo">
-      <h1><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Family Tree</a></h1>
+      <h1>
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          {{ 'HEADER.TITLE' | translate }}
+        </a>
+      </h1>
     </div>
-    <nav>
-      <a routerLink="/persons" routerLinkActive="active">Persone</a>
-      <a routerLink="/about" routerLinkActive="active">Info</a>
-      <a routerLink="/tree" routerLinkActive="active">Tree</a>
 
+    <nav>
+      <a routerLink="/persons" routerLinkActive="active">{{ 'HEADER.PERSONS' | translate }}</a>
+      <a routerLink="/about" routerLinkActive="active">{{ 'HEADER.ABOUT' | translate }}</a>
+      <a routerLink="/tree" routerLinkActive="active">{{ 'HEADER.TREE' | translate }}</a>
     </nav>
+
+    <div class="lang-switcher" (click)="toggleLanguage()">
+      <div class="slider" [class.is-en]="currentLang === 'en'"></div>
+      <span class="lang-text" [class.active]="currentLang === 'it'">IT</span>
+      <span class="lang-text" [class.active]="currentLang === 'en'">ENG</span>
+    </div>
   </div>
 </header>

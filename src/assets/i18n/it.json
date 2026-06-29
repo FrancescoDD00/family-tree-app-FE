@@ -1,0 +1,49 @@
+{
+    "HEADER": {
+        "TITLE": "Albero Genealogico",
+        "PERSONS": "Persone",
+        "ABOUT": "Info",
+        "TREE": "Albero"
+    },
+    "HOME": {
+        "TITLE": "Benvenuto in Family Tree App",
+        "DESCRIPTION": "Questo sito ti permette di inserire persone e costruire il tuo albero genealogico. Puoi aggiungere nuovi membri, modificare le informazioni esistenti e visualizzare le relazioni familiari in modo chiaro e intuitivo.",
+        "CTA": {
+            "START": "Inizia a inserire persone",
+            "ABOUT": "Scopri di più"
+        },
+        "FEATURES": {
+            "TITLE1": "Aggiungi Persone",
+            "TEXT1": "Inserisci nome, cognome, data di nascita e genere dei membri della famiglia.",
+            "TITLE2": "Albero Genealogico",
+            "TEXT2": "Visualizza facilmente le relazioni tra genitori e figli e costruisci il tuo albero.",
+            "TITLE3": "Modifica e Aggiorna",
+            "TEXT3": "Puoi aggiornare le informazioni dei membri in qualsiasi momento, in modo semplice."
+        }
+    },
+    "ABOUT": {
+        "TITLE": "Informazioni",
+        "DESCRIPTION": "Scopri la storia dietro il progetto Family Tree App.",
+        "WHO_AM_I": {
+            "TITLE": "Chi Sono",
+            "P1": "Ciao! Mi chiamo <strong>Francesco Di Domenico</strong>. Sono lo sviluppatore di questa applicazione web, creata con passione per aiutare le persone a scoprire e visualizzare le loro connessioni familiari.",
+            "P2": "Con una forte dedizione alla tecnologia e al design, ho sviluppato questo strumento per rendere accessibile e affascinante l'esplorazione della storia genealogica di ogni famiglia."
+        },
+        "WHAT_IT_DOES": {
+            "TITLE": "Cosa Fa Questo Sito",
+            "INTRO": "Questa applicazione è un <strong>generatore di alberi genealogici interattivi</strong>. Ti permette di:",
+            "ITEMS": {
+                "ITEM1": "Gestire e organizzare i dati dei tuoi familiari",
+                "ITEM2": "Visualizzare le relazioni familiari in modo dinamico e intuitivo",
+                "ITEM3": "Esplorare antenati e discendenti con un semplice click",
+                "ITEM4": "Vedere il tuo albero genealogico con una grafica moderna e accattivante",
+                "ITEM5": "Scoprire le connessioni nascoste tra i membri della tua famiglia"
+            }
+        },
+        "MISSION": {
+            "TITLE": "La mia Missione",
+            "TEXT": "Voglio rendere la genealogia accessibile e coinvolgente per tutti. Il mio obiettivo è fornire uno strumento potente ma facile da usare, che ti permetta di preservare e condividere la storia della tua famiglia per le generazioni future."
+        },
+        "CREDITS": "Sviluppato con ❤️ da <strong>Francesco Di Domenico</strong>"
+    }
+}

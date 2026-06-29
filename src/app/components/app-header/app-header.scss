@@ -2,20 +2,20 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%; 
+  width: 100%;
   height: 2rem;
   background-color: #285A48;
   color: #B0E4CC;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   z-index: 1000;
 
   display: flex;
-  justify-content: center; 
+  justify-content: center;
   padding: 0.5rem 0;
 
   .header-container {
     width: 100%;
-    max-width: 1400px; 
+    max-width: 1400px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -28,11 +28,11 @@
     font-size: 1.5rem;
     font-weight: bold;
     text-decoration: none;
-    
+
     a {
-  text-decoration: none; // disattiva underline
-  color: inherit;         // eredita il colore dall'h1 o dal logo
-}
+      text-decoration: none; // disattiva underline
+      color: inherit; // eredita il colore dall'h1 o dal logo
+    }
   }
 
   nav {
@@ -48,12 +48,57 @@
       transition: all 0.2s;
 
       &:hover {
-        background-color: rgba(255,255,255,0.2);
+        background-color: rgba(255, 255, 255, 0.2);
       }
 
       &.active {
-        background-color: rgba(255,255,255,0.3);
+        background-color: rgba(255, 255, 255, 0.3);
         font-weight: 700;
+      }
+    }
+  }
+
+
+  .lang-switcher {
+    position: relative;
+    display: flex;
+    align-items: center; // Centra verticalmente gli elementi flex
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 4px; // 4px su ogni lato
+    cursor: pointer;
+    width: 90px;
+    height: 32px;
+    box-sizing: border-box; // Fondamentale: include il padding nell'altezza totale
+    user-select: none;
+
+    .slider {
+      position: absolute;
+      top: 4px; // Spazio pari al padding del contenitore
+      left: 4px; // Spazio pari al padding del contenitore
+      width: 41px;
+      height: 24px; // 32px (altezza totale) - 8px (padding sopra e sotto) = 24px
+      background-color: #B0E4CC;
+      border-radius: 15px;
+      transition: transform 0.3s ease;
+    }
+
+    .slider.is-en {
+      transform: translateX(41px);
+    }
+
+    .lang-text {
+      flex: 1;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #B0E4CC;
+      z-index: 1;
+      line-height: 24px; // Forza il testo a centrarsi verticalmente nello spazio di 24px
+      transition: color 0.3s;
+
+      &.active {
+        color: #285A48;
       }
     }
   }
