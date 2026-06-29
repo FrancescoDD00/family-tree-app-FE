@@ -1,0 +1,228 @@
+// Color Variables
+$primary-color: #408A71; // Teal scuro
+$secondary-color: #B0E4CC; // Teal chiaro
+$dark-color: #091413; // Nero
+$light-color: #ffffff; // Bianco
+
+.about-container {
+    width: 100%;
+    min-height: 100vh;
+    background-color: $light-color;
+    color: $dark-color;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+// ========== HERO SECTION ==========
+.hero {
+    background: linear-gradient(135deg, $primary-color 0%, $secondary-color 100%);
+    color: $light-color;
+    padding: 80px 40px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    .hero-content {
+        max-width: 600px;
+        margin: 0 auto;
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba($dark-color, 0.2);
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            font-weight: 300;
+            opacity: 0.95;
+            letter-spacing: 0.5px;
+        }
+    }
+}
+
+// ========== ABOUT CONTENT SECTION ==========
+.about-content {
+    padding: 60px 40px;
+    background-color: $light-color;
+
+    .content-wrapper {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+}
+
+.about-section {
+    background: linear-gradient(to bottom, rgba($secondary-color, 0.1) 0%, rgba($secondary-color, 0.05) 100%);
+    border-left: 4px solid $primary-color;
+    padding: 40px;
+    margin-bottom: 40px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba($primary-color, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+        transform: translateX(5px);
+        box-shadow: 0 4px 12px rgba($primary-color, 0.15);
+    }
+
+    .section-icon {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        display: block;
+    }
+
+    h2 {
+        color: $primary-color;
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        margin-top: 0;
+    }
+
+    p {
+        color: $dark-color;
+        font-size: 1rem;
+        line-height: 1.8;
+        margin-bottom: 15px;
+        letter-spacing: 0.3px;
+
+        strong {
+            color: $primary-color;
+            font-weight: 600;
+        }
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
+// ========== FEATURES LIST ==========
+.features-list {
+    list-style: none;
+    padding: 0;
+    margin: 25px 0;
+
+    li {
+        color: $dark-color;
+        font-size: 1rem;
+        line-height: 2;
+        padding-left: 10px;
+        margin-bottom: 12px;
+        position: relative;
+
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 6px;
+            height: 6px;
+            background-color: $primary-color;
+            border-radius: 50%;
+        }
+    }
+}
+
+
+.credits {
+    background-color: $primary-color;
+    color: $light-color;
+    text-align: center;
+    padding: 30px 40px;
+    margin-top: 60px;
+
+    p {
+        font-size: 1rem;
+        margin: 0;
+        letter-spacing: 0.5px;
+        font-weight: 500;
+
+        strong {
+            font-weight: 700;
+            color: $secondary-color;
+        }
+    }
+}
+
+// ========== RESPONSIVE DESIGN ==========
+@media (max-width: 768px) {
+    .hero {
+        padding: 50px 30px;
+
+        .hero-content {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .tagline {
+                font-size: 1.1rem;
+            }
+        }
+    }
+
+    .about-content {
+        padding: 40px 20px;
+    }
+
+    .about-section {
+        padding: 30px 25px;
+        margin-bottom: 30px;
+
+        h2 {
+            font-size: 1.5rem;
+        }
+
+        p {
+            font-size: 0.95rem;
+        }
+    }
+
+    .features-list li {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        padding: 40px 20px;
+
+        .hero-content {
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .tagline {
+                font-size: 1rem;
+            }
+        }
+    }
+
+    .about-section {
+        padding: 25px 20px;
+        border-left-width: 3px;
+
+        .section-icon {
+            font-size: 2rem;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+        }
+
+        p {
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+    }
+
+    .features-list li {
+        font-size: 0.9rem;
+        line-height: 1.8;
+    }
+
+    .credits p {
+        font-size: 0.9rem;
+    }
+}
