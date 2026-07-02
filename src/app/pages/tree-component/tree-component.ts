@@ -143,7 +143,6 @@ export class TreeComponent implements OnInit, AfterViewInit, OnDestroy {
     const centerX = width / 2;
     const centerY = height / 2;
 
-    // Distanza verticale fissa in pixel tra una generazione e la successiva
     const VERTICAL_SPACING = 150;
 
     svgElement
@@ -164,10 +163,8 @@ export class TreeComponent implements OnInit, AfterViewInit, OnDestroy {
     const isGlobalTree = treeData.id === -999;
 
     if (isGlobalTree) {
-      // --- RENDER ALBERO GLOBALE ---
       const d3Hierarchy = d3.hierarchy(treeData, (d: PersonTreeNode) => d.id === -999 ? d.children : d.children);
 
-      // Aumentata la coordinata Y a 160 per garantire respiro verticale tra i livelli
       const globalLayout = d3.tree<any>().nodeSize([130, 160]);
       globalLayout(d3Hierarchy);
 
@@ -177,7 +174,6 @@ export class TreeComponent implements OnInit, AfterViewInit, OnDestroy {
       gContainer.attr('transform', `translate(${centerX}, 80)`);
 
     } else {
-      // --- RENDER ALBERO FOCALIZZATO ---
       const ancestorsHierarchy = d3.hierarchy(treeData, (d: PersonTreeNode) => {
         const parents = [];
         if (d.father) parents.push(d.father);
@@ -185,17 +181,14 @@ export class TreeComponent implements OnInit, AfterViewInit, OnDestroy {
         return parents;
       });
 
-      // Calcoliamo solo la X usando size, ignoriamo la Y passandogli 1
       const ancestorsLayout = d3.tree<any>().size([width - 200, 1]);
       ancestorsLayout(ancestorsHierarchy);
-      // Forziamo la Y calcolandola sulla base della profondità (distanza esatta!)
       ancestorsHierarchy.descendants().forEach((d: any) => d.y = centerY - (d.depth * VERTICAL_SPACING));
 
       const descendantsHierarchy = d3.hierarchy(treeData, (d: PersonTreeNode) => d.children || []);
 
       const descendantsLayout = d3.tree<any>().size([width - 200, 1]);
       descendantsLayout(descendantsHierarchy);
-      // Stessa operazione di distanziamento esatto per la linea di discendenza
       descendantsHierarchy.descendants().forEach((d: any) => d.y = centerY + (d.depth * VERTICAL_SPACING));
 
       const rootAncestor = ancestorsHierarchy.descendants().find((d: any) => d.data.id === this.selectedPersonId);
@@ -222,7 +215,6 @@ export class TreeComponent implements OnInit, AfterViewInit, OnDestroy {
       gContainer.attr('transform', 'translate(0, 0)');
     }
 
-    // --- DISEGNO ELEMENTI SVG ---
     gContainer.selectAll('.link')
       .data(allLinks)
       .enter()

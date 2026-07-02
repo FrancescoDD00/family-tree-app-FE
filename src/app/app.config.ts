@@ -5,7 +5,6 @@ import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { routes } from './app.routes';
 
-// Questa classe sostituisce TranslateHttpLoader senza darti errori di argomenti
 class CustomTranslateLoader implements TranslateLoader {
   constructor(private http: HttpClient) { }
 

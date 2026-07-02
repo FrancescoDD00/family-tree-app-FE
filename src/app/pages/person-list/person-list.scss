@@ -1,5 +1,5 @@
 .page-container {
-  padding: 6rem 2rem 2rem; // spazio per header fisso
+  padding: 6rem 2rem 2rem;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -212,7 +212,7 @@ table {
   position: relative;
   width: 100%;
   max-width: 500px;
-  margin: 1.5rem auto; // Il valore 'auto' centra orizzontalmente il contenitore
+  margin: 1.5rem auto;
 
   .search-icon {
     position: absolute;
@@ -234,7 +234,7 @@ table {
     background-color: #fff;
     transition: all 0.3s ease;
     outline: none;
-    box-sizing: border-box; // Importante per non sballare la larghezza col padding
+    box-sizing: border-box;
 
     &::placeholder {
       color: #99c2b3;

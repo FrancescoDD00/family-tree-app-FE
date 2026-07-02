@@ -1,70 +1,70 @@
 <form [formGroup]="personForm" (ngSubmit)="addPerson()">
-    <label>Nome:</label>
+    <label>{{ 'PERSON_LIST.NAME' | translate }}:</label>
     <input formControlName="name" type="text" />
     @if (personForm.controls.name.invalid && personForm.controls.name.touched) {
-    <p style="color:red">Nome richiesto e minimo 2 caratteri</p>
+    <p style="color:red">{{ 'PERSON_LIST.NAME_ERROR' | translate }}</p>
     }
 
-    <label>Cognome:</label>
+    <label>{{ 'PERSON_LIST.SURNAME' | translate }}:</label>
     <input formControlName="surname" type="text" />
     @if (personForm.controls.surname.invalid && personForm.controls.surname.touched) {
-    <p style="color:red">Cognome richiesto e minimo 2 caratteri</p>
+    <p style="color:red">{{ 'PERSON_LIST.SURNAME_ERROR' | translate }}</p>
     }
 
-    <label>Data di nascita:</label>
+    <label>{{ 'PERSON_LIST.BIRTH_DATE' | translate }}:</label>
     <input formControlName="birthDate" type="date" />
 
-    <label>Genere:</label>
+    <label>{{ 'PERSON_LIST.GENDER' | translate }}:</label>
     <select formControlName="gender">
-        <option value="">-- Seleziona --</option>
-        <option value="MALE">Maschio</option>
-        <option value="FEMALE">Femmina</option>
+        <option value="">-- {{ 'PERSON_LIST.SELECT' | translate }} --</option>
+        <option value="MALE">{{ 'PERSON_LIST.MALE' | translate }}</option>
+        <option value="FEMALE">{{ 'PERSON_LIST.FEMALE' | translate }}</option>
     </select>
 
-    <label>Padre</label>
+    <label>{{ 'PERSON_LIST.FATHER' | translate }}</label>
     <select formControlName="fatherId">
-        <option [ngValue]="null">-- Nessuno --</option>
+        <option [ngValue]="null">-- {{ 'PERSON_LIST.NONE' | translate }} --</option>
         @for (person of malePersons$ | async; track person.id) {
         <option [ngValue]="person.id">{{ getFullname(person) }}</option>
         }
     </select>
 
-    <label>Madre</label>
+    <label>{{ 'PERSON_LIST.MOTHER' | translate }}</label>
     <select formControlName="motherId">
-        <option [ngValue]="null">-- Nessuna --</option>
+        <option [ngValue]="null">-- {{ 'PERSON_LIST.NONE_FEMALE' | translate }} --</option>
         @for (person of femalePersons$ | async; track person.id) {
         <option [ngValue]="person.id">{{ getFullname(person) }}</option>
         }
     </select>
 
-    <button type="submit" [disabled]="personForm.invalid">Aggiungi Persona</button>
+    <button type="submit" [disabled]="personForm.invalid">{{ 'PERSON_LIST.ADD' | translate }}</button>
 </form>
 
-<h2>Lista delle persone</h2>
+<h2>{{ 'PERSON_LIST.LIST_TITLE' | translate }}</h2>
 
 <div class="search-container">
     <span class="search-icon">🔍</span>
-    <input type="text" [formControl]="searchControl" placeholder="Cerca per nome, cognome o data...">
+    <input type="text" [formControl]="searchControl" placeholder="{{ 'PERSON_LIST.SEARCH_PLACEHOLDER' | translate }}">
 </div>
 
 <table>
     <thead>
         <tr>
-            <th>Nome Completo</th>
-            <th>Data di Nascita</th>
-            <th>Genere</th>
-            <th>Azioni</th>
+            <th>{{ 'PERSON_LIST.FULL_NAME' | translate }}</th>
+            <th>{{ 'PERSON_LIST.BIRTH_DATE' | translate }}</th>
+            <th>{{ 'PERSON_LIST.GENDER' | translate }}</th>
+            <th>{{ 'PERSON_LIST.ACTIONS' | translate }}</th>
         </tr>
     </thead>
     <tbody>
         @for (person of filteredPersons$ | async; track person.id) {
         <tr>
             <td>{{getFullname(person)}}</td>
-            <td>{{ person.birthDate | date:'fullDate':'':'it-IT' }}</td>
+            <td>{{ person.birthDate | date:'fullDate':'':currentLang }}</td>
             <td>{{getGenderLabel(person.gender)}}</td>
             <td>
-                <button (click)="toggleShowDeleteModal(person)">Elimina</button>
-                <button (click)="editPerson(person)">Modifica</button>
+                <button (click)="toggleShowDeleteModal(person)">{{ 'PERSON_LIST.DELETE' | translate }}</button>
+                <button (click)="editPerson(person)">{{ 'PERSON_LIST.EDIT' | translate }}</button>
             </td>
         </tr>
         }
@@ -74,37 +74,37 @@
 @if (showEditModal) {
 <div class="modal" (click)="showEditModal=false">
     <form [formGroup]="editForm" (ngSubmit)="saveEdit(personToEdit.id!)" (click)="$event.stopPropagation()">
-        <label>Nome</label>
+        <label>{{ 'PERSON_LIST.NAME' | translate }}</label>
         <input formControlName="name" />
-        <label>Cognome</label>
+        <label>{{ 'PERSON_LIST.SURNAME' | translate }}</label>
         <input formControlName="surname" />
-        <label>Data di nascita</label>
+        <label>{{ 'PERSON_LIST.BIRTH_DATE' | translate }}</label>
         <input type="date" formControlName="birthDate" />
 
-        <label>Padre</label>
+        <label>{{ 'PERSON_LIST.FATHER' | translate }}</label>
         <select formControlName="fatherId">
-            <option [ngValue]="null">-- Nessuno --</option>
+            <option [ngValue]="null">-- {{ 'PERSON_LIST.NONE' | translate }} --</option>
             @for (person of malePersons$ | async; track person.id) {
             <option [ngValue]="person.id">{{ getFullname(person) }}</option>
             }
         </select>
 
-        <label>Madre</label>
+        <label>{{ 'PERSON_LIST.MOTHER' | translate }}</label>
         <select formControlName="motherId">
-            <option [ngValue]="null">-- Nessuna --</option>
+            <option [ngValue]="null">-- {{ 'PERSON_LIST.NONE_FEMALE' | translate }} --</option>
             @for (person of femalePersons$ | async; track person.id) {
             <option [ngValue]="person.id">{{ getFullname(person) }}</option>
             }
         </select>
 
-        <label>Genere</label>
+        <label>{{ 'PERSON_LIST.GENDER' | translate }}</label>
         <select formControlName="gender">
-            <option value="MALE">Maschio</option>
-            <option value="FEMALE">Femmina</option>
+            <option value="MALE">{{ 'PERSON_LIST.MALE' | translate }}</option>
+            <option value="FEMALE">{{ 'PERSON_LIST.FEMALE' | translate }}</option>
         </select>
 
-        <button type="submit">Salva</button>
-        <button type="button" (click)="showEditModal=false">Annulla</button>
+        <button type="submit">{{ 'PERSON_LIST.SAVE' | translate }}</button>
+        <button type="button" (click)="showEditModal=false">{{ 'PERSON_LIST.CANCEL' | translate }}</button>
     </form>
 </div>
 }
@@ -112,10 +112,10 @@
 @if(showDeleteModal){
 <div class="modalDelete" (click)="showDeleteModal=false">
     <div class="modal-box" (click)="$event.stopPropagation()">
-        <h2>Sei sicuro?</h2>
-        <p>Stai eliminando: <strong>{{getFullname(personToEliminate)}}</strong></p>
-        <button (click)="showDeleteModal=false">Annulla</button>
-        <button (click)="deletePersonById(personToEliminate.id!)">Elimina</button>
+        <h2>{{ 'PERSON_LIST.CONFIRM_DELETE' | translate }}</h2>
+        <p>{{ 'PERSON_LIST.DELETING' | translate }}: <strong>{{getFullname(personToEliminate)}}</strong></p>
+        <button (click)="showDeleteModal=false">{{ 'PERSON_LIST.CANCEL' | translate }}</button>
+        <button (click)="deletePersonById(personToEliminate.id!)">{{ 'PERSON_LIST.DELETE' | translate }}</button>
     </div>
 </div>
 }

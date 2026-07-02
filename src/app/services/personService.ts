@@ -8,9 +8,8 @@ import { Person } from '../models/person';
 })
 export class PersonService {
 
-  private apiUrl = 'http://localhost:8080/api/persons'; // URL del backend
+  private apiUrl = 'http://localhost:8080/api/persons';
   private http = inject(HttpClient);
-  //constructor(private http: HttpClient) { }
 
   updatePerson(updatedPerson: Person): Observable<Person> {
     return this.http.patch<Person>(`${this.apiUrl}/${updatedPerson.id}`, updatedPerson)

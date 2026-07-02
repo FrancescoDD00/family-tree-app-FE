@@ -1,26 +1,30 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { Person } from '../../models/person';
 import { PersonService } from '../../services/personService';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
-import { BehaviorSubject, map, Observable, switchMap, combineLatest, startWith } from 'rxjs';
+import { BehaviorSubject, map, Observable, switchMap, combineLatest, startWith, Subscription } from 'rxjs';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-person-list',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, TranslatePipe],
   templateUrl: './person-list.html',
   styleUrls: ['./person-list.scss'],
 })
-export class PersonListComponent implements OnInit {
+export class PersonListComponent implements OnInit, OnDestroy {
   private refresh$ = new BehaviorSubject<void>(undefined);
+  private translate = inject(TranslateService);
+  private langSub!: Subscription;
+
+  currentLang: string = this.translate.currentLang || 'it';
 
   // Controllo per il filtro
   searchControl = new FormControl('');
 
-  count = signal(0);
   persons$!: Observable<Person[]>;
-  filteredPersons$!: Observable<Person[]>; // Nuovo Observable per la tabella
+  filteredPersons$!: Observable<Person[]>;
   malePersons$!: Observable<Person[]>;
   femalePersons$!: Observable<Person[]>;
 
@@ -51,6 +55,16 @@ export class PersonListComponent implements OnInit {
 
   ngOnInit() {
     this.loadPersons();
+
+    this.langSub = this.translate.onLangChange.subscribe(event => {
+      this.currentLang = event.lang;
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.langSub) {
+      this.langSub.unsubscribe();
+    }
   }
 
   loadPersons() {
@@ -58,7 +72,6 @@ export class PersonListComponent implements OnInit {
       switchMap(() => this.personService.getPersons())
     );
 
-    // Filtro combinato
     this.filteredPersons$ = combineLatest([
       this.persons$,
       this.searchControl.valueChanges.pipe(startWith(''))
@@ -82,8 +95,6 @@ export class PersonListComponent implements OnInit {
       map(persons => persons.filter(p => p.gender === 'FEMALE' && p.id !== this.personToEdit?.id))
     );
   }
-
-  // ... (tutti i tuoi metodi rimangono invariati: toggleShowDeleteModal, deletePersonById, addPerson, etc.)
 
   toggleShowDeleteModal(person: Person) {
     this.personToEliminate = person;

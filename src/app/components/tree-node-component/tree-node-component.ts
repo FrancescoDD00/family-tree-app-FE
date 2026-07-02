@@ -17,7 +17,6 @@ export class TreeNodeComponent {
 
   @Input() isRoot: boolean = true;
   @Input() visited: Set<number> = new Set<number>();
-  // Soluzione professionale con Output
   @Output() personSelected = new EventEmitter<number>();
 
   select(personId: number) {

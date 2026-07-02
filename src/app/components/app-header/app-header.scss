@@ -30,8 +30,8 @@
     text-decoration: none;
 
     a {
-      text-decoration: none; // disattiva underline
-      color: inherit; // eredita il colore dall'h1 o dal logo
+      text-decoration: none;
+      color: inherit;
     }
   }
 
@@ -62,22 +62,22 @@
   .lang-switcher {
     position: relative;
     display: flex;
-    align-items: center; // Centra verticalmente gli elementi flex
+    align-items: center;
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 20px;
     padding: 4px; // 4px su ogni lato
     cursor: pointer;
     width: 90px;
     height: 32px;
-    box-sizing: border-box; // Fondamentale: include il padding nell'altezza totale
+    box-sizing: border-box;
     user-select: none;
 
     .slider {
       position: absolute;
-      top: 4px; // Spazio pari al padding del contenitore
-      left: 4px; // Spazio pari al padding del contenitore
+      top: 4px;
+      left: 4px;
       width: 41px;
-      height: 24px; // 32px (altezza totale) - 8px (padding sopra e sotto) = 24px
+      height: 24px;
       background-color: #B0E4CC;
       border-radius: 15px;
       transition: transform 0.3s ease;
@@ -94,7 +94,7 @@
       font-weight: 600;
       color: #B0E4CC;
       z-index: 1;
-      line-height: 24px; // Forza il testo a centrarsi verticalmente nello spazio di 24px
+      line-height: 24px;
       transition: color 0.3s;
 
       &.active {
@@ -119,6 +119,40 @@
           text-align: left;
         }
       }
+    }
+  }
+
+  @media (max-width: 768px) {
+
+    .hamburger {
+      display: block;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    nav {
+      display: none;
+      position: absolute;
+      top: 3rem;
+      left: 0;
+      width: 100%;
+      background-color: #285A48;
+      flex-direction: column;
+      padding: 1rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+      &.open {
+        display: flex;
+      }
+    }
+  }
+
+  @media (min-width: 769px) {
+    .hamburger {
+      display: none;
     }
   }
 }

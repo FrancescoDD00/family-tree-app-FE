@@ -21,6 +21,32 @@
             "TEXT3": "You can update member information at any time in a simple way."
         }
     },
+    "PERSON_LIST": {
+        "NAME": "Name",
+        "SURNAME": "Surname",
+        "BIRTH_DATE": "Birth Date",
+        "GENDER": "Gender",
+        "FATHER": "Father",
+        "MOTHER": "Mother",
+        "SELECT": "Select",
+        "NONE": "None",
+        "NONE_FEMALE": "None",
+        "MALE": "Male",
+        "FEMALE": "Female",
+        "ADD": "Add Person",
+        "LIST_TITLE": "People List",
+        "SEARCH_PLACEHOLDER": "Search by name, surname or date...",
+        "FULL_NAME": "Full Name",
+        "ACTIONS": "Actions",
+        "DELETE": "Delete",
+        "EDIT": "Edit",
+        "SAVE": "Save",
+        "CANCEL": "Cancel",
+        "CONFIRM_DELETE": "Are you sure?",
+        "DELETING": "You are deleting",
+        "NAME_ERROR": "Name is required and must be at least 2 characters",
+        "SURNAME_ERROR": "Surname is required and must be at least 2 characters"
+    },
     "ABOUT": {
         "TITLE": "About",
         "DESCRIPTION": "Discover the story behind the Family Tree App project.",

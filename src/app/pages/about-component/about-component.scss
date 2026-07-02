@@ -1,8 +1,7 @@
-// Color Variables
-$primary-color: #408A71; // Teal scuro
-$secondary-color: #B0E4CC; // Teal chiaro
-$dark-color: #091413; // Nero
-$light-color: #ffffff; // Bianco
+$primary-color: #408A71;
+$secondary-color: #B0E4CC;
+$dark-color: #091413;
+$light-color: #ffffff;
 
 .about-container {
     width: 100%;
@@ -12,7 +11,6 @@ $light-color: #ffffff; // Bianco
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-// ========== HERO SECTION ==========
 .hero {
     background: linear-gradient(135deg, $primary-color 0%, $secondary-color 100%);
     color: $light-color;
@@ -40,7 +38,6 @@ $light-color: #ffffff; // Bianco
     }
 }
 
-// ========== ABOUT CONTENT SECTION ==========
 .about-content {
     padding: 60px 40px;
     background-color: $light-color;
@@ -97,7 +94,6 @@ $light-color: #ffffff; // Bianco
     }
 }
 
-// ========== FEATURES LIST ==========
 .features-list {
     list-style: none;
     padding: 0;
@@ -146,7 +142,6 @@ $light-color: #ffffff; // Bianco
     }
 }
 
-// ========== RESPONSIVE DESIGN ==========
 @media (max-width: 768px) {
     .hero {
         padding: 50px 30px;
