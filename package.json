@@ -43,6 +43,7 @@
     "@angular/build": "^21.1.2",
     "@angular/cli": "^21.1.2",
     "@angular/compiler-cli": "^21.1.0",
+    "@playwright/test": "^1.61.1",
     "@types/d3": "^7.4.3",
     "@types/express": "^5.0.1",
     "@types/node": "^20.17.19",
