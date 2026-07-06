@@ -19,5 +19,10 @@
       <span class="lang-text" [class.active]="currentLang === 'it'">IT</span>
       <span class="lang-text" [class.active]="currentLang === 'en'">ENG</span>
     </div>
+
+    <button class="theme-toggle" (click)="themeService.toggle()" [attr.aria-label]="'Toggle theme'">
+      <i class="fas" [class.fa-moon]="themeService.theme() === 'light'"
+        [class.fa-sun]="themeService.theme() !== 'light'"></i>
+    </button>
   </div>
 </header>

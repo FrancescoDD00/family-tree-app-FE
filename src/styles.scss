@@ -1,5 +1,50 @@
-/* You can add global styles to this file, and also import other style files */
-body{
+:root,
+[data-theme="light"] {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f5f5f5;
+    --bg-tertiary: #e6e6e6;
+    --text-primary: #091413;
+    --text-secondary: #333333;
+    --text-on-dark: #ffffff;
+    --surface: #B0E4CC;
+    --surface-hover: #408A71;
+    --surface-dark: #285A48;
+    --border: #408A71;
+    --header-bg: #285A48;
+    --header-text: #B0E4CC;
+    --danger: #ff6b6b;
+    --danger-hover: #e04848;
+    --shadow: rgba(0, 0, 0, 0.1);
+    --overlay: rgba(0, 0, 0, 0.5);
+    --hero-overlay: rgba(9, 20, 19, 0.5);
+    --white-overlay: rgba(255, 255, 255, 0.3);
+}
+
+[data-theme="dark"] {
+    --bg-primary: #121212;
+    --bg-secondary: #1e1e1e;
+    --bg-tertiary: #2a2a2a;
+    --text-primary: #e0e0e0;
+    --text-secondary: #b0b0b0;
+    --text-on-dark: #091413;
+    --surface: #1e3a2e;
+    --surface-hover: #2d5a48;
+    --surface-dark: #0d1f1a;
+    --border: #2d5a48;
+    --header-bg: #0d1f1a;
+    --header-text: #B0E4CC;
+    --danger: #c0392b;
+    --danger-hover: #a93226;
+    --shadow: rgba(0, 0, 0, 0.3);
+    --overlay: rgba(0, 0, 0, 0.7);
+    --hero-overlay: rgba(0, 0, 0, 0.7);
+    --white-overlay: rgba(0, 0, 0, 0.4);
+}
+
+body {
     margin: 0;
     padding: 0;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }

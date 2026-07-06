@@ -1,7 +1,7 @@
 .homepage-container {
   position: relative;
   font-family: Arial, sans-serif;
-  color: #091413;
+  color: var(--text-primary);
   background-image: url("../../../assets/images/Albero_genealogico_BG.png");
   background-size: cover;
   background-position: center;
@@ -17,7 +17,7 @@
     content: "";
     position: absolute;
     inset: 0;
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: var(--white-overlay);
     z-index: 1;
   }
 
@@ -42,7 +42,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background-color: rgba(9, 20, 19, 0.5);
+      background-color: var(--hero-overlay);
       border-radius: 12px;
       z-index: -1;
     }
@@ -50,7 +50,7 @@
     h1 {
       font-size: 3rem;
       font-weight: bold;
-      color: #B0E4CC;
+      color: var(--header-text);
       margin-bottom: 1rem;
     }
 
@@ -76,20 +76,20 @@
         transition: all 0.2s ease;
 
         &.btn-primary {
-          background-color: #408A71;
+          background-color: var(--surface-hover);
           color: #fff;
 
           &:hover {
-            background-color: #285A48;
+            background-color: var(--surface-dark);
           }
         }
 
         &.btn-secondary {
-          background-color: #B0E4CC;
-          color: #091413;
+          background-color: var(--surface);
+          color: var(--text-on-dark);
 
           &:hover {
-            background-color: #408A71;
+            background-color: var(--surface-hover);
             color: #fff;
           }
         }
@@ -105,11 +105,11 @@
 
     .feature {
       flex: 1 1 250px;
-      background-color: #B0E4CC;
+      background-color: var(--surface);
       border-radius: 10px;
       padding: 2rem;
       text-align: center;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 10px var(--shadow);
       transition: transform 0.2s ease;
 
       &:hover {
@@ -117,12 +117,12 @@
       }
 
       h2 {
-        color: #285A48;
+        color: var(--surface-dark);
         margin-bottom: 1rem;
       }
 
       p {
-        color: #091413;
+        color: var(--text-primary);
       }
     }
   }

@@ -6,10 +6,10 @@ import { AppHeader } from './components/app-header/app-header';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,RouterModule,CommonModule,AppHeader],
+  imports: [RouterOutlet, RouterModule, CommonModule, AppHeader],
   templateUrl: './app.html',
   styleUrl: './app.scss',
-    standalone: true
+  standalone: true
 })
 export class App {
   protected readonly title = signal('family-tree-app');

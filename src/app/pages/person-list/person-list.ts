@@ -134,7 +134,11 @@ export class PersonListComponent implements OnInit, OnDestroy {
   }
 
   getFullname(person: Person): string { return `${person.name} ${person.surname}`; }
-  getGenderLabel(gender: string): string { return gender === 'MALE' ? 'Maschio' : 'Femmina'; }
+  getGenderLabel(gender: string): string {
+    return gender === 'MALE'
+      ? this.translate.instant('PERSON_LIST.MALE')
+      : this.translate.instant('PERSON_LIST.FEMALE');
+  }
   birthDateNotFuture(control: AbstractControl): ValidationErrors | null {
     if (!control.value) return null;
     const today = new Date();

@@ -2,6 +2,7 @@ import { Component, inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { ThemeService } from '../../services/themeService';
 
 @Component({
   selector: 'app-app-header',
@@ -13,6 +14,7 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 export class AppHeader {
   private translate = inject(TranslateService);
   private platformId = inject(PLATFORM_ID);
+  themeService = inject(ThemeService);
 
   currentLang: string = 'it';
   isMenuOpen = false;
