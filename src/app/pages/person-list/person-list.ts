@@ -2,14 +2,15 @@ import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { Person } from '../../models/person';
 import { PersonService } from '../../services/personService';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
-import { BehaviorSubject, map, Observable, switchMap, combineLatest, startWith, Subscription } from 'rxjs';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors, FormsModule } from '@angular/forms';
+import { BehaviorSubject, map, Observable, switchMap, combineLatest, startWith, Subscription, forkJoin, tap } from 'rxjs';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-person-list',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, TranslatePipe],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, TranslatePipe],
   templateUrl: './person-list.html',
   styleUrls: ['./person-list.scss'],
 })
@@ -17,10 +18,10 @@ export class PersonListComponent implements OnInit, OnDestroy {
   private refresh$ = new BehaviorSubject<void>(undefined);
   private translate = inject(TranslateService);
   private langSub!: Subscription;
+  private toastService = inject(ToastService);
 
   currentLang: string = this.translate.currentLang || 'it';
 
-  // Controllo per il filtro
   searchControl = new FormControl('');
 
   persons$!: Observable<Person[]>;
@@ -28,10 +29,15 @@ export class PersonListComponent implements OnInit, OnDestroy {
   malePersons$!: Observable<Person[]>;
   femalePersons$!: Observable<Person[]>;
 
+  private allPersons: Person[] = [];
+
+  showAddModal: boolean = false;
   showEditModal: boolean = false;
   showDeleteModal: boolean = false;
+  showDetailsModal: boolean = false;
   personToEdit!: Person;
   personToEliminate!: Person;
+  personToView!: Person;
 
   personForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(2)]),
@@ -51,6 +57,8 @@ export class PersonListComponent implements OnInit, OnDestroy {
     gender: new FormControl<string>('', Validators.required)
   });
 
+  childrenInputs: { personId: number | null }[] = [];
+
   constructor(private personService: PersonService) { }
 
   ngOnInit() {
@@ -69,7 +77,8 @@ export class PersonListComponent implements OnInit, OnDestroy {
 
   loadPersons() {
     this.persons$ = this.refresh$.pipe(
-      switchMap(() => this.personService.getPersons())
+      switchMap(() => this.personService.getPersons()),
+      tap(persons => { this.allPersons = persons; })
     );
 
     this.filteredPersons$ = combineLatest([
@@ -106,6 +115,7 @@ export class PersonListComponent implements OnInit, OnDestroy {
       next: () => {
         this.refresh$.next();
         this.showDeleteModal = false;
+        this.toastService.success('PERSON_LIST.TOAST_DELETED');
       },
       error: (err) => console.error(err)
     });
@@ -115,25 +125,86 @@ export class PersonListComponent implements OnInit, OnDestroy {
     return nameOrSurname?.trim().split(/\s+/).map(word => word[0].toUpperCase() + word.slice(1).toLowerCase()).join(' ') ?? '';
   }
 
+  addChildInput() {
+    this.childrenInputs.push({ personId: null });
+  }
+
+  removeChild(index: number) {
+    this.childrenInputs.splice(index, 1);
+  }
+
   addPerson() {
     if (this.personForm.valid) {
       const formValue = this.personForm.value;
+      const gender = formValue.gender!;
       const newPerson: Person = {
         name: this.formatName(formValue.name!),
         surname: this.formatName(formValue.surname!),
         birthDate: formValue.birthDate!,
         fatherId: formValue.fatherId ?? undefined,
         motherId: formValue.motherId ?? undefined,
-        gender: formValue.gender!
+        gender
       };
-      this.personService.addPerson(newPerson).subscribe(() => {
+      this.personService.addPerson(newPerson).subscribe(created => {
         this.refresh$.next();
+
+        const validChildrenIds = this.childrenInputs
+          .filter(c => c.personId != null)
+          .map(c => c.personId!);
+
+        if (validChildrenIds.length > 0) {
+          const updateObservables = validChildrenIds.map(childId => {
+            const parentField = gender === 'MALE' ? 'fatherId' as const : 'motherId' as const;
+            return this.personService.getPerson(childId).pipe(
+              switchMap(child => {
+                if (!child) return [];
+                const updatedChild: Person = { ...child, [parentField]: created.id };
+                return this.personService.updatePerson(updatedChild);
+              })
+            );
+          });
+
+          forkJoin(updateObservables).subscribe(() => {
+            this.refresh$.next();
+          });
+        }
+
         this.personForm.reset();
+        this.childrenInputs = [];
+        this.showAddModal = false;
+        this.toastService.success('PERSON_LIST.TOAST_ADDED');
       });
     }
   }
 
   getFullname(person: Person): string { return `${person.name} ${person.surname}`; }
+
+  getFullnameWithContext(person: Person): string {
+    const father = person.fatherId != null
+      ? this.allPersons.find(p => p.id === person.fatherId)
+      : undefined;
+    const mother = person.motherId != null
+      ? this.allPersons.find(p => p.id === person.motherId)
+      : undefined;
+
+    const base = `${person.name} ${person.surname}`;
+
+    const fatherLabel = father
+      ? this.getFullname(father)
+      : (person.fatherId != null ? `ID: ${person.fatherId}` : null);
+    const motherLabel = mother
+      ? this.getFullname(mother)
+      : (person.motherId != null ? `ID: ${person.motherId}` : null);
+
+    const contextParts: string[] = [];
+    if (fatherLabel) contextParts.push(`padre: ${fatherLabel}`);
+    if (motherLabel) contextParts.push(`madre: ${motherLabel}`);
+
+    return contextParts.length > 0
+      ? `${base} (${contextParts.join(', ')})`
+      : base;
+  }
+
   getGenderLabel(gender: string): string {
     return gender === 'MALE'
       ? this.translate.instant('PERSON_LIST.MALE')
@@ -159,6 +230,15 @@ export class PersonListComponent implements OnInit, OnDestroy {
     this.showEditModal = true;
   }
 
+  showPersonDetail(person: Person) {
+    this.personToView = person;
+    this.showDetailsModal = true;
+  }
+
+  closeEditModal() {
+    this.showEditModal = false;
+  }
+
   saveEdit(id: number) {
     if (this.editForm.valid) {
       const formValue = this.editForm.value;
@@ -175,6 +255,7 @@ export class PersonListComponent implements OnInit, OnDestroy {
         next: () => {
           this.refresh$.next();
           this.showEditModal = false;
+          this.toastService.success('PERSON_LIST.TOAST_UPDATED');
         }
       });
     }

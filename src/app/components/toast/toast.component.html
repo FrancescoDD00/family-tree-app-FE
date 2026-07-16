@@ -1,0 +1,11 @@
+<div class="toast-container">
+    @for (toast of activeToasts(); track toast.id) {
+    <div class="toast" [class]="'toast-' + toast.type" (click)="onDismiss(toast.id)"
+        [class.dismissing]="isDismissing(toast.id)">
+        <div class="toast-content">
+            <span class="toast-message">{{ toast.message }}</span>
+        </div>
+        <div class="toast-progress" [style.background]="getTypeColor(toast.type)"></div>
+    </div>
+    }
+</div>
