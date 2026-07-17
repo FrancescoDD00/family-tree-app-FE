@@ -48,7 +48,11 @@
         "SURNAME_ERROR": "Cognome richiesto e minimo 2 caratteri",
         "CHILDREN": "Figliooooo",
         "ADD_CHILD": "Aggiungi figlio",
-        "SELECT_CHILD": "Seleziona un figlio"
+        "SELECT_CHILD": "Seleziona un figlio",
+        "TOAST_ADDED": "Persona aggiunta con successo",
+        "TOAST_UPDATED": "Persona aggiornata con successo",
+        "TOAST_DELETED": "Persona eliminata con successo",
+        "TOAST_ERROR": "Operazione fallita. Verifica che il server sia raggiungibile."
     },
     "ABOUT": {
         "TITLE": "Informazioni",

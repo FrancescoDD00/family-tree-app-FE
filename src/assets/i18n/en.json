@@ -60,7 +60,8 @@
         "TOOLTIP_REMOVE_CHILD": "Remove this child from the list",
         "TOAST_ADDED": "Person added successfully",
         "TOAST_UPDATED": "Person updated successfully",
-        "TOAST_DELETED": "Person deleted successfully"
+        "TOAST_DELETED": "Person deleted successfully",
+        "TOAST_ERROR": "Operation failed. Check that the server is reachable."
     },
     "ABOUT": {
         "TITLE": "About",

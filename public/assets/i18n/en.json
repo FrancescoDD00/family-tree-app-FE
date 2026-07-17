@@ -48,7 +48,11 @@
         "SURNAME_ERROR": "Surname is required and must be at least 2 characters",
         "CHILDREN": "Children",
         "ADD_CHILD": "Add child",
-        "SELECT_CHILD": "Select a child"
+        "SELECT_CHILD": "Select a child",
+        "TOAST_ADDED": "Person added successfully",
+        "TOAST_UPDATED": "Person updated successfully",
+        "TOAST_DELETED": "Person deleted successfully",
+        "TOAST_ERROR": "Operation failed. Check that the server is reachable."
     },
     "ABOUT": {
         "TITLE": "About",

@@ -92,7 +92,7 @@
                 @for (child of childrenInputs; track $index) {
                 <div class="child-row">
                     <label>{{ 'PERSON_LIST.SELECT_CHILD' | translate }} {{$index + 1}}</label>
-                    <select [(ngModel)]="child.personId" name="childId{{$index}}">
+                    <select [(ngModel)]="child.personId" [ngModelOptions]="{standalone: true}" name="childId{{$index}}">
                         <option [ngValue]="null">-- {{ 'PERSON_LIST.SELECT' | translate }} --</option>
                         @for (person of persons$ | async; track person.id) {
                         <option [ngValue]="person.id">{{ getFullnameWithContext(person) }}</option>

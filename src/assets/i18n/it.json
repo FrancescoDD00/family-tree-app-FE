@@ -60,7 +60,8 @@
         "TOOLTIP_REMOVE_CHILD": "Rimuovi questo figlio dalla lista",
         "TOAST_ADDED": "Persona aggiunta con successo",
         "TOAST_UPDATED": "Persona aggiornata con successo",
-        "TOAST_DELETED": "Persona eliminata con successo"
+        "TOAST_DELETED": "Persona eliminata con successo",
+        "TOAST_ERROR": "Operazione fallita. Verifica che il server sia raggiungibile."
     },
     "ABOUT": {
         "TITLE": "Informazioni",

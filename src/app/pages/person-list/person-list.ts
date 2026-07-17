@@ -3,7 +3,7 @@ import { Person } from '../../models/person';
 import { PersonService } from '../../services/personService';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors, FormsModule } from '@angular/forms';
-import { BehaviorSubject, map, Observable, switchMap, combineLatest, startWith, Subscription, forkJoin, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, switchMap, combineLatest, startWith, Subscription, forkJoin, tap, EMPTY } from 'rxjs';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ToastService } from '../../services/toast.service';
 
@@ -117,7 +117,10 @@ export class PersonListComponent implements OnInit, OnDestroy {
         this.showDeleteModal = false;
         this.toastService.success('PERSON_LIST.TOAST_DELETED');
       },
-      error: (err) => console.error(err)
+      error: (err) => {
+        console.error(err);
+        this.toastService.error('PERSON_LIST.TOAST_ERROR');
+      }
     });
   }
 
@@ -145,36 +148,53 @@ export class PersonListComponent implements OnInit, OnDestroy {
         motherId: formValue.motherId ?? undefined,
         gender
       };
-      this.personService.addPerson(newPerson).subscribe(created => {
-        this.refresh$.next();
+      this.personService.addPerson(newPerson).subscribe({
+        next: (created) => {
+          const validChildrenIds = this.childrenInputs
+            .filter(c => c.personId != null)
+            .map(c => c.personId!);
 
-        const validChildrenIds = this.childrenInputs
-          .filter(c => c.personId != null)
-          .map(c => c.personId!);
+          if (validChildrenIds.length > 0) {
+            const updateObservables = validChildrenIds.map(childId => {
+              const parentField = gender === 'MALE' ? 'fatherId' as const : 'motherId' as const;
+              return this.personService.getPerson(childId).pipe(
+                switchMap(child => {
+                  if (!child) return EMPTY;
+                  const updatedChild: Person = { ...child, [parentField]: created.id! };
+                  return this.personService.updatePerson(updatedChild);
+                })
+              );
+            });
 
-        if (validChildrenIds.length > 0) {
-          const updateObservables = validChildrenIds.map(childId => {
-            const parentField = gender === 'MALE' ? 'fatherId' as const : 'motherId' as const;
-            return this.personService.getPerson(childId).pipe(
-              switchMap(child => {
-                if (!child) return [];
-                const updatedChild: Person = { ...child, [parentField]: created.id };
-                return this.personService.updatePerson(updatedChild);
-              })
-            );
-          });
-
-          forkJoin(updateObservables).subscribe(() => {
+            forkJoin(updateObservables).subscribe({
+              next: () => {
+                this.refresh$.next();
+                this.finalizeAdd();
+              },
+              error: (err) => {
+                console.error(err);
+                this.toastService.error('PERSON_LIST.TOAST_ERROR');
+                this.finalizeAdd();
+              }
+            });
+          } else {
             this.refresh$.next();
-          });
+            this.finalizeAdd();
+          }
+        },
+        error: (err) => {
+          console.error(err);
+          this.toastService.error('PERSON_LIST.TOAST_ERROR');
         }
-
-        this.personForm.reset();
-        this.childrenInputs = [];
-        this.showAddModal = false;
-        this.toastService.success('PERSON_LIST.TOAST_ADDED');
       });
     }
+  }
+
+  private finalizeAdd(): void {
+    this.personForm.reset();
+    this.childrenInputs = [];
+    this.showAddModal = false;
+    this.toastService.success('PERSON_LIST.TOAST_ADDED');
   }
 
   getFullname(person: Person): string { return `${person.name} ${person.surname}`; }
@@ -256,6 +276,10 @@ export class PersonListComponent implements OnInit, OnDestroy {
           this.refresh$.next();
           this.showEditModal = false;
           this.toastService.success('PERSON_LIST.TOAST_UPDATED');
+        },
+        error: (err) => {
+          console.error(err);
+          this.toastService.error('PERSON_LIST.TOAST_ERROR');
         }
       });
     }
