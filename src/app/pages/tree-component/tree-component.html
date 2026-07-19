@@ -2,16 +2,31 @@
 
   <div class="selector">
     <label>Chi sei?</label>
-    @if (persons$ | async; as persons) {
-    <select [(ngModel)]="selectedPersonId" (ngModelChange)="selectPersonById($event)">
-      <option [ngValue]="null">Seleziona una persona</option>
-      @for (p of persons; track p.id) {
-      <option [ngValue]="p.id">
-        {{ getFullname(p) }}
-      </option>
+    <div class="custom-select" (clickOutside)="closeDropdown()">
+      <button class="select-trigger" type="button" (click)="toggleDropdown()">
+        <span class="select-value">
+          @if (selectedPerson$ | async; as selectedPerson) {
+          {{ getFullname(selectedPerson) }}
+          } @else {
+          Seleziona una persona
+          }
+        </span>
+        <span class="select-arrow" [class.open]="dropdownOpen()">▾</span>
+      </button>
+
+      @if (dropdownOpen()) {
+      <div class="select-options">
+        @if (persons$ | async; as persons) {
+        @for (person of persons; track person.id) {
+        <button class="select-option" type="button" [class.selected]="person.id === selectedPersonId"
+          (click)="selectPerson(person.id)">
+          {{ getFullname(person) }}
+        </button>
+        }
+        }
+      </div>
       }
-    </select>
-    }
+    </div>
   </div>
 
   <div class="tree-visualizer">

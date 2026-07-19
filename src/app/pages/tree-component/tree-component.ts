@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, OnDestroy, inject, effect } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, OnDestroy, inject, effect, HostListener, signal } from '@angular/core';
 import { Person } from '../../models/person';
 import { PersonTreeNode } from '../../models/personTreeNode';
 import { PersonService } from '../../services/personService';
@@ -29,6 +29,8 @@ export class TreeComponent implements OnInit, AfterViewInit, OnDestroy {
   private themeService = inject(ThemeService);
   private treeDataCache: PersonTreeNode | null = null;
 
+  dropdownOpen = signal(false);
+
   constructor(private personService: PersonService) {
     effect(() => {
       this.themeService.theme();
@@ -36,6 +38,29 @@ export class TreeComponent implements OnInit, AfterViewInit, OnDestroy {
         setTimeout(() => this.renderD3Tree(this.treeDataCache!), 50);
       }
     });
+  }
+
+  toggleDropdown(): void {
+    this.dropdownOpen.set(!this.dropdownOpen());
+  }
+
+  closeDropdown(): void {
+    this.dropdownOpen.set(false);
+  }
+
+  selectPerson(id: number | null | undefined): void {
+    const normalized: number | null = id == null ? null : id;
+    this.selectedPersonId = normalized;
+    this.selectedPersonIdSubject.next(normalized);
+    this.closeDropdown();
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.custom-select')) {
+      this.closeDropdown();
+    }
   }
 
   ngOnInit() {

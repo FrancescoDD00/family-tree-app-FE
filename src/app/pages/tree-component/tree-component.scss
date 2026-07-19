@@ -6,7 +6,111 @@
 }
 
 .selector {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  width: 100%;
+  max-width: 420px;
+
+  label {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+}
+
+.custom-select {
+  position: relative;
+  user-select: none;
+}
+
+.select-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.12));
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text-primary);
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    border-color: var(--surface-hover);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(64, 138, 113, 0.25);
+    border-color: var(--surface-hover);
+  }
+}
+
+.select-value {
+  flex: 1;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.select-arrow {
+  font-size: 12px;
+  opacity: 0.8;
+  transition: transform 0.2s ease;
+
+  &.open {
+    transform: rotate(180deg);
+  }
+}
+
+.select-options {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  margin-top: 8px;
+  max-height: 240px;
+  overflow-y: auto;
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.12));
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: 0 10px 24px var(--shadow);
+}
+
+.select-option {
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 14px;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--surface-hover);
+    color: #fff;
+  }
+
+  &.selected {
+    background: var(--surface-dark);
+    color: #fff;
+    font-weight: 600;
+  }
+
+  &:first-child {
+    border-radius: 9px 9px 0 0;
+  }
+
+  &:last-child {
+    border-radius: 0 0 9px 9px;
+  }
 }
 
 .tree {
